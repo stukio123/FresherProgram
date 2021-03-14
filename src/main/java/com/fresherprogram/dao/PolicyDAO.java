@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -33,7 +34,7 @@ public class PolicyDAO {
 		return jdbcTemplate.queryForObject(query,new PolicyRowMapper());
 	}
 	
-	public int save(Policy policy) {
+	public int save(Policy policy) throws DuplicateKeyException{
 		String query = String.format("update Policy "
 									+ "set renewDate = '%s', "
 									+ "expiryDate = '%s', "
@@ -51,7 +52,7 @@ public class PolicyDAO {
 									policy.getMotor().getchassisNo(), policy.getMotor().getengineNo(),policy.getPolicyNo());
 		return jdbcTemplate.update(query);
 	}
-	public int issue(Policy policy) {
+	public int issue(Policy policy) throws DuplicateKeyException{
 		String query = String.format("update Policy "
 									+ "set renewDate = '%s', "
 									+ "expiryDate = '%s',"
