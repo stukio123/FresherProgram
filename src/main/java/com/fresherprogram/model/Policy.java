@@ -1,24 +1,64 @@
 package com.fresherprogram.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import net.bytebuddy.utility.RandomString;
 
+@Entity
+@Table(name="Policy")
 public class Policy {
+	
+	@Id
+	@Column(name="Id")
 	private int id;
+	
+	@Column(name="policyNo")
 	private String policyNo;
+	
+	@Column(name="inceptionDate")
 	private Date inceptionDate;
+	
+	@Column(name="expiryDate")
 	private Date expiryDate;
+	
+	@Column(name="renewDate")
 	private Date renewDate;
+	
+	@Column(name="policyOwner")
 	private Client policyOwner;
-	private BigDecimal sumInsured;
+	
+	@Column(name="sumInsured")
+	private double sumInsured;
+	
+	@Column(name="rate")
 	private float rate;
-	private Status statusPolicy;
-	private BigDecimal annualPremium;
-	private BigDecimal postedPremium;
-	private Status billingCurrency;
-	private Motor vehicleRegistrationNo;
+	
+	@Column(name="statusPolicy")
+	private String statusPolicy;
+	
+	@Column(name="annualPremium")
+	private double annualPremium;
+	
+	@Column(name="postedPremium")
+	private double postedPremium;
+	
+	@Column(name="billingCurrency")
+	private String billingCurrency;
+	
+	@Column(name="vehicleRegistrationNo")
+	private Motor motor;
+	
+	@Column(name="engineNo")
+	private String engineNo;
+	
+	@Column(name="chassisNo")
+	private String chassisNo;
+	
 	
 	public Policy() {
 		super();
@@ -27,18 +67,33 @@ public class Policy {
 		this.expiryDate = null;
 		this.renewDate = null;
 		this.policyOwner = null;
-		this.sumInsured = new BigDecimal(0);
+		this.sumInsured = 0;
 		this.rate = 0;
-		this.statusPolicy = null;
-		this.annualPremium = new BigDecimal(0);
-		this.postedPremium = new BigDecimal(0);
-		this.billingCurrency = null;
-		this.vehicleRegistrationNo = null;
+		this.statusPolicy = "";
+		this.annualPremium = 0;
+		this.postedPremium = 0;
+		this.billingCurrency = "";
+		this.motor = null;
+		this.engineNo = "";
+		this.chassisNo = "";
 	}
 	
-	public Policy( Date inceptionDate, Date expiryDate, Date renewDate, Client policyOwner,
-			BigDecimal sumInsured, float rate, Status statusPolicy, BigDecimal annualPremium, BigDecimal postedPremium,
-			Status billingCurrency, Motor vehicleRegistrationNo) {
+	
+
+	@Override
+	public String toString() {
+		return "Policy [id=" + id + ", policyNo=" + policyNo + ", inceptionDate=" + inceptionDate + ", expiryDate="
+				+ expiryDate + ", renewDate=" + renewDate + ", policyOwner=" + policyOwner + ", sumInsured="
+				+ sumInsured + ", rate=" + rate + ", statusPolicy=" + statusPolicy + ", annualPremium=" + annualPremium
+				+ ", postedPremium=" + postedPremium + ", billingCurrency=" + billingCurrency + ", motor=" + motor
+				+ ", engineNo=" + engineNo + ", chassisNo=" + chassisNo + "]";
+	}
+
+
+
+	public Policy(String policyNo, Date inceptionDate, Date expiryDate, Date renewDate, Client policyOwner,
+			double sumInsured, float rate, String statusPolicy, double annualPremium, double postedPremium,
+			String billingCurrency, Motor motor, String engineNo, String chassisNo) {
 		super();
 		this.policyNo = RandomString.make(8);
 		this.inceptionDate = inceptionDate;
@@ -51,177 +106,129 @@ public class Policy {
 		this.annualPremium = annualPremium;
 		this.postedPremium = postedPremium;
 		this.billingCurrency = billingCurrency;
-		this.vehicleRegistrationNo = vehicleRegistrationNo;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((annualPremium == null) ? 0 : annualPremium.hashCode());
-		result = prime * result + ((billingCurrency == null) ? 0 : billingCurrency.hashCode());
-		result = prime * result + ((expiryDate == null) ? 0 : expiryDate.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((inceptionDate == null) ? 0 : inceptionDate.hashCode());
-		result = prime * result + ((policyNo == null) ? 0 : policyNo.hashCode());
-		result = prime * result + ((policyOwner == null) ? 0 : policyOwner.hashCode());
-		result = prime * result + ((postedPremium == null) ? 0 : postedPremium.hashCode());
-		result = prime * result + Float.floatToIntBits(rate);
-		result = prime * result + ((renewDate == null) ? 0 : renewDate.hashCode());
-		result = prime * result + ((statusPolicy == null) ? 0 : statusPolicy.hashCode());
-		result = prime * result + ((sumInsured == null) ? 0 : sumInsured.hashCode());
-		result = prime * result + ((vehicleRegistrationNo == null) ? 0 : vehicleRegistrationNo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Policy other = (Policy) obj;
-		if (annualPremium == null) {
-			if (other.annualPremium != null)
-				return false;
-		} else if (!annualPremium.equals(other.annualPremium))
-			return false;
-		if (billingCurrency == null) {
-			if (other.billingCurrency != null)
-				return false;
-		} else if (!billingCurrency.equals(other.billingCurrency))
-			return false;
-		if (expiryDate == null) {
-			if (other.expiryDate != null)
-				return false;
-		} else if (!expiryDate.equals(other.expiryDate))
-			return false;
-		if (id != other.id)
-			return false;
-		if (inceptionDate == null) {
-			if (other.inceptionDate != null)
-				return false;
-		} else if (!inceptionDate.equals(other.inceptionDate))
-			return false;
-		if (policyNo == null) {
-			if (other.policyNo != null)
-				return false;
-		} else if (!policyNo.equals(other.policyNo))
-			return false;
-		if (policyOwner == null) {
-			if (other.policyOwner != null)
-				return false;
-		} else if (!policyOwner.equals(other.policyOwner))
-			return false;
-		if (postedPremium == null) {
-			if (other.postedPremium != null)
-				return false;
-		} else if (!postedPremium.equals(other.postedPremium))
-			return false;
-		if (Float.floatToIntBits(rate) != Float.floatToIntBits(other.rate))
-			return false;
-		if (renewDate == null) {
-			if (other.renewDate != null)
-				return false;
-		} else if (!renewDate.equals(other.renewDate))
-			return false;
-		if (statusPolicy == null) {
-			if (other.statusPolicy != null)
-				return false;
-		} else if (!statusPolicy.equals(other.statusPolicy))
-			return false;
-		if (sumInsured == null) {
-			if (other.sumInsured != null)
-				return false;
-		} else if (!sumInsured.equals(other.sumInsured))
-			return false;
-		if (vehicleRegistrationNo == null) {
-			if (other.vehicleRegistrationNo != null)
-				return false;
-		} else if (!vehicleRegistrationNo.equals(other.vehicleRegistrationNo))
-			return false;
-		return true;
+		this.motor = motor;
+		this.engineNo = engineNo;
+		this.chassisNo = chassisNo;
 	}
 
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getPolicyNo() {
 		return policyNo;
 	}
+
 	public void setPolicyNo(String policyNo) {
 		this.policyNo = policyNo;
 	}
+
 	public Date getInceptionDate() {
 		return inceptionDate;
 	}
+
 	public void setInceptionDate(Date inceptionDate) {
 		this.inceptionDate = inceptionDate;
 	}
+
 	public Date getExpiryDate() {
 		return expiryDate;
 	}
+
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
+
 	public Date getRenewDate() {
 		return renewDate;
 	}
+
 	public void setRenewDate(Date renewDate) {
 		this.renewDate = renewDate;
 	}
+
 	public Client getPolicyOwner() {
 		return policyOwner;
 	}
+
 	public void setPolicyOwner(Client policyOwner) {
 		this.policyOwner = policyOwner;
 	}
-	public BigDecimal getSumInsured() {
+
+	public double getSumInsured() {
 		return sumInsured;
 	}
-	public void setSumInsured(BigDecimal sumInsured) {
+
+	public void setSumInsured(double sumInsured) {
 		this.sumInsured = sumInsured;
 	}
+
 	public float getRate() {
 		return rate;
 	}
+
 	public void setRate(float rate) {
 		this.rate = rate;
 	}
-	public Status getStatusPolicy() {
+
+	public String getStatusPolicy() {
 		return statusPolicy;
 	}
-	public void setStatusPolicy(Status statusPolicy) {
+
+	public void setStatusPolicy(String statusPolicy) {
 		this.statusPolicy = statusPolicy;
 	}
-	public BigDecimal getAnnualPremium() {
+
+	public double getAnnualPremium() {
 		return annualPremium;
 	}
-	public void setAnnualPremium(BigDecimal annualPremium) {
+
+	public void setAnnualPremium(double annualPremium) {
 		this.annualPremium = annualPremium;
 	}
-	public BigDecimal getPostedPremium() {
+
+	public double getPostedPremium() {
 		return postedPremium;
 	}
-	public void setPostedPremium(BigDecimal postedPremium) {
+
+	public void setPostedPremium(double postedPremium) {
 		this.postedPremium = postedPremium;
 	}
-	public Status getBillingCurrency() {
+
+	public String getBillingCurrency() {
 		return billingCurrency;
 	}
-	public void setBillingCurrency(Status billingCurrency) {
+
+	public void setBillingCurrency(String billingCurrency) {
 		this.billingCurrency = billingCurrency;
 	}
-	public Motor getVehicleRegistrationNo() {
-		return vehicleRegistrationNo;
+
+	public Motor getMotor() {
+		return motor;
 	}
-	public void setVehicleRegistrationNo(Motor vehicleRegistrationNo) {
-		this.vehicleRegistrationNo = vehicleRegistrationNo;
+
+	public void setMotor(Motor motor) {
+		this.motor = motor;
+	}
+
+	public String getEngineNo() {
+		return engineNo;
+	}
+
+	public void setEngineNo(String engineNo) {
+		this.engineNo = engineNo;
+	}
+
+	public String getChassisNo() {
+		return chassisNo;
+	}
+
+	public void setChassisNo(String chassisNo) {
+		this.chassisNo = chassisNo;
 	}
 	
 	

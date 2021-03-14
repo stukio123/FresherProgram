@@ -20,4 +20,9 @@ public class ClientDAO {
 		String query = "Select * from Client";
 		return jdbcTemplate.query(query, new BeanPropertyRowMapper<Client>(Client.class));
 	}
+	
+	public Client findById(String id) {
+		String query = String.format("Select * from Client where Client.clientId = '%s'", id);
+		return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<Client>(Client.class));
+	}
 }

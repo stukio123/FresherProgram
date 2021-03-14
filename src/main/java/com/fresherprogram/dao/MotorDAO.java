@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.fresherprogram.model.Motor;
-import com.fresherprogram.model.Status;
 
 public class MotorDAO {
 	
@@ -18,8 +17,13 @@ public class MotorDAO {
 		this.jdbcTemplate = template;
 	}
 	
-	public List<Motor> findAll(){
-		String query = "Select * from Motor";
-		return jdbcTemplate.query(query, new BeanPropertyRowMapper<Motor>(Motor.class));
+	public Motor findByChassisNo(String chassisNo) {
+		String query = String.format("select * from Policy where chassisNo = '%s'",chassisNo);
+		return jdbcTemplate.queryForObject(query,new BeanPropertyRowMapper<Motor>(Motor.class));
+	}
+	
+	public Motor findByEngineNo(String engineNo) {
+		String query = String.format("select * from Policy where engineNo = '%s'",engineNo);
+		return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<Motor>(Motor.class));
 	}
 }

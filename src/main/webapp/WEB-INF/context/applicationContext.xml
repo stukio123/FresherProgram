@@ -20,8 +20,6 @@
 		
 	<context:property-placeholder location="classpath:database.properties"/>
 	
-	<bean id="dao" class="com.fresherprogram.dao.ClientDAO"></bean>
-	
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
@@ -46,4 +44,12 @@
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<bean id="clientDAO" class="com.fresherprogram.dao.ClientDAO"></bean>
+	<bean id="policyDAO" class="com.fresherprogram.dao.PolicyDAO"></bean>
+	<bean id="policyService" class="com.fresherprogram.service.PolicyService"></bean>
+	<bean id="policyMapper" class="com.fresherprogram.mapper.PolicyMapper"></bean>
+	<bean id="motorDAO" class="com.fresherprogram.dao.MotorDAO"></bean>
+	<bean id="motorService" class="com.fresherprogram.service.MotorService"></bean>
+	<bean id="motorMapper" class="com.fresherprogram.mapper.MotorMapper"></bean>
 </beans>

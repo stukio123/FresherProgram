@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Client")
-public class Client {
+public class Client{
 
 	@Id
 	@Column(name="clientId")
@@ -39,9 +39,9 @@ public class Client {
 	public Client() {
 		this.firstName = "";
 		this.lastName = "";
-		this.gender = "";
-		this.country = "";
-		this.maritalStatus = "";
+		this.gender = null;
+		this.country = null;
+		this.maritalStatus = null;
 		this.address = "";
 		this.dateOfBirth = new Date();
 	}
