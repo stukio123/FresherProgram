@@ -27,9 +27,10 @@
 		</c:if>
 		<form:form method="POST" action="renewPolicy" modelAttribute="policy">
 			<div class="mb-3">
-				<label for="PolicyNo" class="form-label">Policy No: ${policyId }</label> <input
-					type="text" class="form-control" name="policyNo" id="PolicyNo"
-					value="${policyID }" hidden required>
+				<label for="PolicyNo" class="form-label">Policy No:
+					${policyId }</label> <input type="text" class="form-control"
+					name="policyNo" id="PolicyNo" value="${policyID }" readonly
+					required>
 			</div>
 			<div class="mb-3">
 				<label for="RenewalDate" class="form-label">Renewal Date</label> <input
@@ -38,8 +39,8 @@
 			</div>
 			<div class="mb-3">
 				<label for="ExpiryDate" class="form-label">Expiry Date</label> <input
-					type="date" class="form-control" name="expiryDate" 
-					id="ExpiryDate" required>
+					type="date" class="form-control" name="expiryDate" id="ExpiryDate"
+					required>
 			</div>
 			<div class="mb-3">
 				<label for="PolicyOwner" class="form-label">Policy Owner</label> <input
@@ -63,7 +64,8 @@
 			</div>
 			<div class="mb-3">
 				<label for="BillingCurrency" class="form-label">Billing
-					Currency</label> <select class="form-control" id="sel1" name="billingCurrency" required>
+					Currency</label> <select class="form-control" id="sel1"
+					name="billingCurrency" required>
 					<option key="vnd" value="vnd" selected>VND</option>
 					<option key="usd" value="usd">USD</option>
 					<option key="SGD" value="SGD">SGD</option>
@@ -76,22 +78,24 @@
 			</div>
 			<div class="mb-3">
 				<label for="Rate" class="form-label">Rate</label> <input
-					type="number" class="form-control" name="rate" id="Rate" min=0 step=0.01
-					required>
+					type="number" class="form-control" name="rate" id="Rate" min=0
+					step=0.01 required>
 			</div>
 			<div class="mb-3">
 				<label for="AnnualPremium" class="form-label">Annual Premium</label>
 				<input type="text" class="form-control" name="annualPremium"
-					id="AnnualPremium" required>
+					id="AnnualPremium" min=0 required>
 			</div>
 			<div class="mb-3">
 				<label for="PostedPremium" class="form-label">Posted Premium</label>
-				<input type="text" class="form-control" name="postedPremium" id="PostedPremium"
-					required>
+				<input type="text" class="form-control" name="postedPremium"
+					id="PostedPremium" required min=0 required>
 			</div>
-			<input type="submit" class="btn btn-warning" id="issue" name="Issue" value="Issue"/>
+			<input type="submit" class="btn btn-warning" id="issue" name="Issue"
+				value="Issue" />
 			<button type="button" class="btn btn-secondary" id="refresh">Refresh</button>
-			<input type="submit" class="btn btn-success" id="save" name="Save" value="Save"/>
+			<input type="submit" class="btn btn-success" id="save" name="Save"
+				value="Save" />
 		</form:form>
 	</div>
 	<jsp:include page="/WEB-INF/views/components/footer.jsp" />
@@ -120,14 +124,18 @@
 					var postedPremium = 0;
 					var days = Math.ceil((expiryDate.getTime() - renewDate
 							.getTime())
-							/ (1000 * 360 * 24));
+							/ (1000 * 3600 * 24));
+					console.log(days);
 					if (days < 0)
 						alert("Expiry Date must be greater than Renewal Date");
 					else {
-						if(leapYear(expiryDate.getFullYear()))
-							postedPremium = (resultAnnual*days/366).toFixed(2);
-						else{
-							postedPremium = (resultAnnual*days/365).toFixed(2);
+						leapYear(renewDate.getFullYear())
+						if (leapYear(expiryDate.getFullYear()))
+							postedPremium = (resultAnnual * days / 366)
+									.toFixed(2);
+						else {
+							postedPremium = (resultAnnual * days / 365)
+									.toFixed(2);
 						}
 					}
 					$("#PostedPremium").val(postedPremium);
@@ -135,17 +143,7 @@
 				})
 
 		function leapYear(year) {
-			var result;
-			if (year / 400) {
-				result = true
-			} else if (year / 100) {
-				result = false
-			} else if (year / 4) {
-				result = true
-			} else {
-				result = false
-			}
-			return result
+			return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 		}
 	</script>
 </body>

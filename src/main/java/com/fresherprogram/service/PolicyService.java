@@ -60,8 +60,6 @@ public class PolicyService {
 			Date renewalDate = cal.getTime();
 			cal.setTime(format.parse(policyDTO.getExpiryDate()));
 			Date expiryDate = cal.getTime();
-			System.out.println(expiryDate);
-			System.out.print(renewalDate);
 			double sumInsured = Double.parseDouble(policyDTO.getSumInsured());
 			float rate = Float.parseFloat(policyDTO.getRate());
 			double annualPremium = Double.parseDouble(policyDTO.getAnnualPremium());
@@ -71,7 +69,11 @@ public class PolicyService {
 			if(rate < 0)
 				return "Rate must not be Negative";
 			if(sumInsured < 0)
-				return "sumInsured must not be Negative";
+				return "Sum Insured must not be Negative";
+			if(annualPremium < 0)
+				return "Annual Premium must not be Negative";
+			if(postedPremium < 0)
+				return "Posted Premium must not be Negative";
 		}catch (Exception e) {
 			System.out.println(e);
 			System.out.println(policyDTO.toString());
